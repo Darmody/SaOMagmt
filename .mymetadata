@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="SDMS"
+  id="myeclipse.1374335289323"
+  context-root="/SDMS"
+  j2ee-spec="6.0"
+  archive="SDMS.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

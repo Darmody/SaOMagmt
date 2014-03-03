@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<meta charset = "utf-8">
+<html http-equiv = "Content-Language" content = "zh-CN">
+<head>
+<script type = "text/javascript" src = "../resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/jquery-cookie.js"></script>
+<script type = "text/javascript" src = "../resources/js/header.js"></script>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/style.css"/>
+<title>
+报盘结果
+</title>
+</head>
+<body>
+<div id = "header"></div>
+<div class = "container">
+<h2 class = "text-center">关心xx的调查</h2>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。我们正在进行关于xxx的调查。</p>
+<hr/>
+<div id = "question1">
+	<span class = 'badge badge-info'>单选</span>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp;问题1:</strong><span id = "question-1">下面哪种生物的智商为零?</span>
+	<div class = "row">
+		<div class = "span8">
+	<table class = "table table-striped table-condensed">
+		<thead>
+			<tr>
+				<th>
+				选项
+				</th>
+				<th class = "span1">
+					小计
+				</th>
+				<th class ="span3">
+					百分比
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					你
+				</td>
+				<td>
+					0
+				</td>
+				<td>
+					<div class="progress progress-striped active span2">
+						<div class="bar" style="width: 50%;"></div>
+					</div>
+					&nbsp;&nbsp;50%
+				</td>
+			</tr>
+			<tr>
+				<td>
+					你
+				</td>
+				<td>
+					0
+				</td>
+				<td>
+					<div class="progress progress-striped active">
+						<div class="bar" style="width: 40%;"></div>
+					</div>					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					蔡寰宇
+				</td>
+				<td>
+					0
+				</td>
+				<td>
+					<div class="progress progress-striped active">
+						<div class="bar" style="width: 40%;"></div>
+					</div>					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</div>
+	<span id = "questionInfo-1" data-optionCount = "3" data-questionType = "sinSelect"></span>
+	</div>
+	<hr/>
+
+	<div id = "question2">
+	<span class = 'badge badge-info'>多选</span>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp;问题2:</strong><span id = "question-2">下面哪种生物的智商为零?</span>
+	<div class = "options">
+	<label class = "checkbox">
+		<input type = "checkbox" id = "userAnswer-2-1" name = "answer-2" value = "1">
+		<span id = "answer-2-1">蔡寰宇</span>
+	</label>
+	<label class = "checkbox">
+		<input type = "checkbox" id = "userAnswer-2-2" name = "answer-2" value = "2">
+		<span id = "answer-2-2">蔡寰宇</span>
+	</label>
+	<label class = "checkbox">
+		<input type = "checkbox" id = "userAnswer-2-3" name = "answer-2" value = "3">
+		<span id = "answer-2-3">蔡寰宇</span>
+	</label>
+	<span id = "questionInfo-2" data-optionCount = "3" data-questionType = "mulSelect"></span>
+	</div>
+	</div>
+	<hr/>
+
+	<div id = "question3">
+	<span class = "badge badge-info">判断</span>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp;问题3:</strong>蔡寰宇是智商为零的生物吗?
+	<div class = "options">
+	<label class = "radio">
+		<input type = "radio" id = "userAnswer-3-1" name = "answer-3" value = "1">
+		<span id = "answer-3-1">是的，他是！</span>
+	</label>
+	<label class = "radio">
+		<input type = "radio" id = "userAnswer-3-2" name = "answer-3" value = "2">
+		<span id = "answer-3-2">是的，他是！</span>
+	</label>
+	<span id = "questionInfo-3" data-questionType = "checkOption"></span>
+	</div>
+	</div>
+	<hr/>
+
+	<div id = "question4">
+	<span class = "badge badge-info">论述</span>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp;问题4:</strong><span id = "question-4">请简述蔡寰宇为什么智商为零?</span>
+	<div class = "options">
+		<textarea id = "userAnswer-4-1" class = "input-xxlarge" rows = "3"></textarea>
+		<span id = "questionInfo-4" data-questionType = "textInput">
+	</div>
+	</div>
+	<hr/>
+
+	<div id = "quesiont5">
+	<span class = "badge badge-info">文件</span>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp;问题5:</strong><span id = "question-5">请上传一个文件</span>
+	<div class = "options">
+		<input type = "file" id = "userAnswer-5-1">
+		<span id = "questionInfo-5" data-questionType = "fileUpload"></span>
+	</div>
+	</div>
+	<hr/>
+</div>
+</body>
+</html>

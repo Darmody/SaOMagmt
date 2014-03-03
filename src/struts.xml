@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	 <constant name="struts.i18n.encoding" value="UTF-8" />  
+     <constant name="struts.objectFactory" value="spring" />     
+     <constant name="struts.action.extension" value="action" />  
+     <constant name="struts.multipart.maxSize" value="5242880"></constant> 
+  <!--     <constant name="struts.multipart.saveDir" value="/conf"></constant> -->
+     
+	<package name="default" extends="json-default">  
+       	<interceptors>  
+            <interceptor name="monitorLevelAuthorityInterceptor"   
+            	class="com.darmody.buumanagementsystem.action.interceptor.MonitorLevelAuthorityInterceptor"/>  
+            <interceptor-stack name="interceptorStack">  
+                <interceptor-ref name="defaultStack"/>  
+                <interceptor-ref name="monitorLevelAuthorityInterceptor"/>  
+            </interceptor-stack>
+            <interceptor name="collegeLevelAuthorityInterceptor"   
+            	class="com.darmody.buumanagementsystem.action.interceptor.CollegeLevelAuthorityInterceptor"/>  
+            <interceptor-stack name="interceptorStack">  
+                <interceptor-ref name="defaultStack"/>  
+                <interceptor-ref name="collegeLevelAuthorityInterceptor"/>  
+            </interceptor-stack>
+            <!-- 配置注解拦截器 -->
+            <interceptor name="annotationInterceptor" 
+            	class="com.opensymphony.xwork2.interceptor.annotations.AnnotationWorkflowInterceptor"/>  
+            <interceptor-stack name="annotatedStack">
+            	<interceptor-ref name="annotationInterceptor"/>
+            	<interceptor-ref name="defaultStack"/>
+           </interceptor-stack>  
+        </interceptors>  
+    </package>  
+ </struts>    

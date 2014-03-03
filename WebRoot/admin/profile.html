@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<meta charset = "utf-8" http-equiv = "Content-Language" content = "zh-CN">
+<html>
+<head>
+<title>
+	个人设置
+</title>
+<script type = "text/javascript" src = "../resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/jquery-cookie.js"></script>
+<script type = "text/javascript" src = "../resources/js/header.js"></script>
+<script type = "text/javascript" src = "../resources/js/profile_admin.js"></script>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/style.css"/>
+</head>
+<body>
+	<div id = "header"></div>
+	<div class = "container row">
+		<div class = "offset1 span4">
+			姓名：<span id = "name"></span>
+			<br/>
+			教工号：<span id = "adminCode"></span>
+		</div>
+	</div>
+	<hr class ="container"/>
+	<div class = "container">
+		<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+			<ul class="nav nav-tabs" id = "myTab">
+				<li class="active"><a href="#editProfile" data-toggle="tab">个人资料</a></li>
+				<li><a href="#updatePassword" data-toggle="tab">修改密码</a></li>
+			</ul>
+		<div class="tab-content">
+			<div class = "tab-pane active" id = "editProfile">
+				<form class = "form-horizontal">
+				<div class = "control-group">
+					<label class = "control-label" for = "email">邮箱</label>
+					<div class = "controls">
+						<input type = "text" name = "email" id = "email">
+					</div>
+				</div>
+				<div class = "control-group">
+					<label class = "control-label" for = "phoneNum">手机号</label>
+					<div class = "controls">
+						<input type = "text" name = "phoneNum" id = "phoneNum">
+					</div>
+				</div>
+				<div class = "form-actions">
+					<input type = "button" value = "确认修改" class = "btn btn-primary" id = "editProfileSubmit">
+				</div>
+				</form>
+			</div>
+
+			<div class = "tab-pane" id = "updatePassword">
+			<form class = "form-horizontal">
+				<div class = "control-group">
+					<label class = "control-label" for = "lastPassword">当前密码</label>
+					<div class = "controls">
+						<input type = "password" name = "lastPassword" id = "lastPassword">
+					</div>
+				</div>
+				<div class = "control-group">
+					<label class = "control-label" for = "newPassword1">新密码</label>
+					<div class = "controls">
+						<input type = "password" name = "newPassword1" id = "newPassword1" placeholder = "请输入不少于6个字符">
+						<span class="help-inline" id = "passwordCheck1"></span>
+					</div>
+				</div>
+				<div class = "control-group">
+					<label class = "control-label" for = "newPassword2">再输入一遍</label>
+					<div class = "controls">
+						<input type = "password" name = "newPassword2" id = "newPassword2" placeholder = "请输入不少于6个字符">
+						<span class="help-inline" id = "passwordCheck2"></span>
+					</div>
+				</div>
+				<div class = "form-actions">
+					<input type = "button" value = "确认修改" class = "btn btn-primary" id = "updatePasswordSubmit">
+				</div>
+			</form>
+		</div>
+		<div>
+	</div>
+
+<div id = "footer" class = "navbar-static-bottom">
+<hr />
+<span style="font-family:arial;">Copyright &copy; 2013</span>
+<br>Powered by <a href = "http://www.gstill.com/">Still</a> & <a href = "/SDMS/conf/蔡寰宇-简历.doc">Darmody</a>
+<br><a href = "about.html">About us</a>
+</div>
+
+</body>
+</html>

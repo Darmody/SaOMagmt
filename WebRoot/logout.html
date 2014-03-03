@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<meta charset = "utf-8" http-equiv = "Content-Language" content = "zh-CN">
+<html>
+<head>
+	<title>
+注销
+	</title>
+<script type = "text/javascript" src = "resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "resources/js/jquery-cookie.js"></script>
+<script type = "text/javascript">	
+	$(function(){
+		$.get("logout.action",null,function(){
+			$.cookie("userName",null);
+			$.cookie("userType",null);
+			$.cookie("adminType",null);
+				var fromPage = document.referrer;
+				var fromPageArray = fromPage.split("/");
+				fromPage = fromPageArray[fromPageArray.length - 1];
+				if(fromPage == "logout.html"){
+				}
+				else{
+					window.location.reload();
+				}
+		})
+	})
+</script>
+<script type = "text/javascript" src = "resources/js/header.js"></script>
+<link rel = "stylesheet" media = "screen" href = "resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "resources/css/style.css"/>
+</head>
+<body>
+<div id = "header"></div>
+<div class = "container">
+	您已成功退出!
+</div>
+
+<div id = "footer" class = "navbar-static-bottom">
+<hr />
+<span style="font-family:arial;">Copyright &copy; 2013</span>
+<br>Powered by <a href = "http://www.gstill.com/">Still</a> & <a href = "/SDMS/conf/蔡寰宇-简历.doc">Darmody</a>
+<br><a href = "about.html">About us</a>
+</div>
+
+</body>
+</html>

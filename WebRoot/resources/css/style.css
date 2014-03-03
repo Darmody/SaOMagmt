@@ -1,0 +1,30 @@
+body{
+padding-top:40px;
+}
+#footer{
+text-align:center;
+padding-bottom:10px;
+}
+
+.thwidth3Words{
+width:70px;
+}
+.thwidthStuCode{
+width:105px;
+}
+.thwidthStuName{
+width:45px;
+}
+.options{
+padding-left: 85px;
+padding-top: 5px;
+}
+.center {
+  width: auto;
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+}
+.text-center {
+  text-align: center;
+}

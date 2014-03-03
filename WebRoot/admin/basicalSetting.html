@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<meta charset = "utf-8" http-equiv = "Content-Language" content = "zh-CN">
+<html>
+<head>
+<title>
+	基础数据管理
+</title>
+<script type = "text/javascript" src = "../resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/jquery-cookie.js"></script>
+<script type = "text/javascript" src = "../resources/js/header.js"></script>
+<script type = "text/javascript" src = "../resources/js/basicalSetting_public.js"></script>
+<script type = "text/javascript" src = "../resources/js/basicalSetting_private.js"></script>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/style.css"/>
+</head>
+<body>
+<div id = "header"></div>
+<div class = "container">
+
+<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+	<ul class="nav nav-tabs" id = "myTab">
+		<li class="active"><a href="#teacherDataManage" data-toggle="tab" onclick = "teacherDataReload();">教师管理</a></li>
+		<li><a href="#facultyDataManage" data-toggle="tab" onclick = "facultyDataReload();">系别管理</a></li>
+		<li><a href="#majorDataManage" data-toggle="tab" onclick = "majorDataReload();"> 专业管理</a></li>
+		<li><a href="#classDataManage" data-toggle="tab" onclick = "classDataReload();">班级管理</a></li>
+	</ul>
+	<div class="tab-content">
+ <!-- 教师数据管理页面		 -->
+		<div class="tab-pane active" id="teacherDataManage">
+				<input type = "button" id = "teacherDataAddButton" value = "添加数据" class = "btn"/>
+				<div class="btn-group">
+					<button class = 'btn' onclick = 'javascript:pageChange(-1)'>上一页</button>
+					<button class = 'btn' onclick = 'javascript:maxResult(20);'>20</button>
+					<button class = 'btn' onclick = 'javascript:maxResult(30);'>30</button>
+					<button class = 'btn' onclick = 'javascript:maxResult(50);'>50</button>
+					<button class = 'btn' onclick = 'javascript:pageChange(+1)'>下一页</button>
+				</div>
+				<input type = "button" id = "teacherDataDeleteButton" value = "删除所选" class = "btn pull-right"/>
+			<table id = "teacherDataTable" class = "table table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>
+							选择
+						</th>
+						<th>
+							教工号
+						</th>
+						<th>
+							姓名
+						</th>
+						<th>
+							管理权限
+						</th>
+						<th>
+							手机号
+						</th>
+						<th>
+							邮箱
+						</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+<!-- 系数据管理页面 -->
+		<div class="tab-pane" id="facultyDataManage">
+				<input type = "button" id = "facultyDataAddButton" value = "添加数据" class = "btn"/>
+				<input type = "button" id = "facultyDataDeleteButton" value = "删除所选" class = "btn pull-right"/>
+			<table id = "facultyDataTable" class = "table table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>
+							选择
+						</th>
+						<th>
+							系名称
+						</th>
+						<th>
+							系管理员
+						</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+<!-- 专业数据管理页面 -->
+		<div class="tab-pane" id="majorDataManage">
+			<select id = "facultiesList">
+			</select>
+			<br/>
+				<input type = "button" id = "majorDataAddButton" value = "添加数据" class = "btn"/>
+				<input type = "button" id = "majorDataDeleteButton" value = "删除所选" class = "btn pull-right"/>
+			<table id = "majorDataTable" class = "table table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>
+							选择
+						</th>
+						<th>
+							专业名称
+						</th>
+						<th>
+							专业管理员
+						</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+<!-- 班级数据管理页面 -->
+		<div class="tab-pane" id="classDataManage">
+			<select id = "facultiesList_Class">
+			</select>
+			<select id = "majorsList_Class">
+			</select>
+			<br/>
+				<input type = "button" id = "classDataAddButton" value = "添加数据" class = "btn"/>
+				<input type = "button" id = "classDataDeleteButton" value = "删除所选" class = "btn pull-right"/>
+			<table id = "classDataTable" class = "table table-hover table-condensed table-bordered">
+				<thead>
+					<tr>
+						<th>
+							选择
+						</th>
+						<th>
+							班级名称
+						</th>
+						<th>
+							班级管理员
+						</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+		</div>
+
+	</div>
+</div>
+</div><!-- 关闭<div class = "container"> -->
+
+<!-- 添加新教师modal -->
+<div class="modal hide fade" id = "teacherDataAddModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>添加新教师</h3>
+	</div>
+	<div class="modal-body">
+	<form class = "form-horizontal">
+	<div class = "control-group">
+				<label class = "control-label" for = "teacherCodeAdd">教工号</label>
+				<div class = "controls">
+					<input type = "text" name = "teacherCodeAdd" id = "teacherCodeAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "teacherNameAdd">姓名</label>
+				<div class = "controls">
+					<input type = "text" name = "teacherNameAdd" id = "teacherNameAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "teacherPhoneAdd">手机</label>
+				<div class = "controls">
+					<input type = "text" name = "teacherPhoneAdd" id = "teacherPhoneAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "teacherEmailAdd">邮箱</label>
+				<div class = "controls">
+					<input type = "text" name = "teacherEmailAdd" id = "teacherEmailAdd">
+				</div>
+	</div>
+	</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">取消</a>
+		<a href="#" class="btn btn-primary" id = "teacherDataAddSubmit">确认添加</a>
+	</div>
+</div>
+<!-- end of 添加新教师 -->
+<!-- 添加新系modal -->
+<div class="modal hide fade" id = "facultyDataAddModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>添加新系</h3>
+	</div>
+	<div class="modal-body">
+	<form class = "form-horizontal">
+	<div class = "control-group">
+				<label class = "control-label" for = "facultyNameAdd">系名称</label>
+				<div class = "controls">
+					<input type = "text" name = "facultyNameAdd" id = "facultyNameAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "facultyAdminAdd">系管理员</label>
+				<div class = "controls">
+					<select name = "facultyAdminAdd" class = "facultyAdminAdd" id = "facultyAdminAdd">
+					</select>
+				</div>
+	</div>
+	<div id = "facultyAdminAddAgainDiv"></div>
+	<input type = "button" id = "facultyAdminAddAgainSubmitButton" class = "btn" value = "新增一个系管理员">
+	</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">取消</a>
+		<input type = "button" class="btn btn-primary" id = "facultyDataAddSubmit" value = "确认添加">
+	</div>
+</div>
+<!-- end of 添加新系 -->
+<!-- 添加新专业modal -->
+<div class="modal hide fade" id = "majorDataAddModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>添加新专业</h3>
+	</div>
+	<div class="modal-body">
+	<form class = "form-horizontal">
+	<div class = "control-group">
+				<label class = "control-label" for = "facultyListAdd">所属系</label>
+				<div class = "controls">
+					<select name = "facultyListAdd" id = "facultyListAdd">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "majorNameAdd">专业名称</label>
+				<div class = "controls">
+					<input type = "text" name = "majorNameAdd" id = "majorNameAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "majorAdminAdd">专业管理员</label>
+				<div class = "controls">
+					<select name = "majorAdminAdd" id = "majorAdminAdd" class = "majorAdminAdd">
+					</select>
+				</div>
+	</div>
+	<div id = "majorAdminAddAgainDiv"></div>
+	<input type = "button" id = "majorAdminAddAgainSubmitButton" class = "btn" value = "新增一个专业管理员">
+	</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">取消</a>
+		<a href="#" class="btn btn-primary" id = "majorDataAddSubmit">确认添加</a>
+	</div>
+</div>
+<!-- end of 添加新专业 -->
+<!-- 添加新班级modal -->
+<div class="modal hide fade" id = "classDataAddModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>添加新班级</h3>
+	</div>
+	<div class="modal-body">
+	<form class = "form-horizontal">
+	<div class = "control-group">
+				<label class = "control-label" for = "facultiesListAdd_Class">所属系</label>
+				<div class = "controls">
+					<select name = "facultiesListAdd_Class" id = "facultiesListAdd_Class">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "majorsListAdd_Class">所属专业</label>
+				<div class = "controls">
+					<select name = "majorsListAdd_Class" id = "majorsListAdd_Class">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classNameAdd">班级名称</label>
+				<div class = "controls">
+					<input type = "text" name = "classNameAdd" id = "classNameAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classAdminAdd">班级管理员</label>
+				<div class = "controls">
+					<select name = "classAdminAdd" id = "classAdminAdd">
+					</select>
+				</div>
+	</div>
+	</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">取消</a>
+		<a href="#" class="btn btn-primary" id = "classDataAddSubmit">确认添加</a>
+	</div>
+</div>
+<!-- end of 添加新班级 -->
+
+<div id = "footer" class = "navbar-static-bottom">
+<hr />
+<span style="font-family:arial;">Copyright &copy; 2013</span>
+<br>Powered by <a href = "http://www.gstill.com/">Still</a> & <a href = "/SDMS/conf/蔡寰宇-简历.doc">Darmody</a>
+<br><a href = "about.html">About us</a>
+</div>
+
+</body>
+</html>

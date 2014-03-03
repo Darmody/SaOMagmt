@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<meta charset = "utf-8">
+<html>
+<head>
+<script type = "text/javascript" src = "../resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/appendList.js"></script>
+<script type = "text/javascript" src = "../resources/js/studentDataManage_public.js"></script>
+<script type = "text/javascript" src = "../resources/js/studentDataManage_private.js"></script>
+<script type = "text/javascript" src = "../resources/js/jquery-cookie.js"></script>
+<script type = "text/javascript" src = "../resources/js/header.js"></script>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/style.css"/>
+<title>
+学生数据管理
+</title>
+</head>
+<body>
+<div id = "header"></div>
+
+<div id = "stuDataDisplay" class = "container">
+		<input type = "button" id = "stuDataAddButton" value = "添加数据" class = "btn"/>
+		<input type = "button" id = "bulkAddButton" value = "批量添加数据" class = "btn"/>
+		<div class="btn-group" data-toggle='buttons-radio'>
+			<button class = 'btn' onclick = 'javascript:pageChange(-1)'>上一页</button>
+			<button class = 'btn' onclick = 'javascript:maxResult(30);'>30</button>
+			<button class = 'btn' onclick = 'javascript:maxResult(50);'>50</button>
+			<button class = 'btn' onclick = 'javascript:maxResult(100);'>100</button>
+			<button class = 'btn' onclick = 'javascript:pageChange(+1)'>下一页</button>
+		</div>
+		<input type = "button" id = "stuDataDeleteButton" value = "删除所选" class = "btn pull-right"/>
+	<table class = "table table-hover table-condensed table-striped" id = "studentDataTable">
+		<thead>
+			<tr>
+				<th><button class = "btn" id = "checkButton">选择</button></th>
+				<th><input type = "text" placeholder = "学号" class = "search-query input-medium" onblur = "javascript:viewStuCode();" id = "theadStuCode"></th>
+				<th><input type = "text" placeholder = "姓名" class = "search-query input-mini" onblur = "javascript:viewStuName();" id = "theadStuName"></th>
+				<th>
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadGender">性别<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href = "javascript:viewGender('*');">全部</a></li>
+								<li><a href = "javascript:viewGender('男');">男</a></li>
+								<li><a href = "javascript:viewGender('女');">女</a></li>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+
+				<th>
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadFaculty">系别<span class="caret"></span></button>
+							<ul class="dropdown-menu" id = "facultiesDropDown">
+								<script type = "text/javascript">
+									var jQueryObj = "#facultiesDropDown";
+									appendFacultiesDropDown(jQueryObj);
+								</script>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+
+				<th>
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadMajor">专业<span class="caret"></span></button>
+							<ul class="dropdown-menu" id = "majorsDropDown">
+								<li><a href = "javascript:viewMajor('-1');">全部</a></li>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+
+				<th class = "span1">
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadGrade">年级<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href = "javascript:viewGrade('-1');">全部</a></li>
+								<li><a href = "javascript:viewGrade('大一');">大一</a></li>
+								<li><a href = "javascript:viewGrade('大二');">大二</a></li>
+								<li><a href = "javascript:viewGrade('大三');">大三</a></li>
+								<li><a href = "javascript:viewGrade('大四');">大四</a></li>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+
+				<th>
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadClass">班级<span class="caret"></span></button>
+							<ul class="dropdown-menu" id = "classesDropDown">
+								<li><a href = "javascript:viewClass('-1');">全部</a></li>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+
+				<th class = "thwidth3Words"><button class = "btn">班主任</button></th>
+				<th class = "thwidth3Words"><button class = "btn">辅导员</button></th>
+				<th class = "span1">
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadSchoolingYear">学制<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href = "javascript:viewSchoolingYear('-1');">全部</a></li>
+								<li><a href = "javascript:viewSchoolingYear('四年');">四年</a></li>
+								<li><a href = "javascript:viewSchoolingYear('三年');">三年</a></li>
+								<li><a href = "javascript:viewSchoolingYear('二年');">二年</a></li>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+				<th class = "span1">
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadSchoolRoll">学籍状态<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href = "javascript:viewSchooRoll('-1');">全部</a></li>
+								<li><a href = "javascript:viewSchooRoll('正常');">正常</a></li>
+								<li><a href = "javascript:viewSchooRoll('离校');">离校</a></li>
+								<li><a href = "javascript:viewSchooRoll('入伍');">入伍</a></li>
+								<li><a href = "javascript:viewSchooRoll('休学');">休学</a></li>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+				<th><input type = "text" placeholder = "身份证" class = "thwidthStuCode search-query" onblur = "javascript:viewIDNum();" id = "theadIDNum"></th>
+				<th class = "span1">
+					<div class="btn-group">
+						<button class="btn dropdown-toggle" data-toggle="dropdown" id = "theadThnic">民族<span class="caret"></span></button>
+							<ul class="dropdown-menu">
+								<li><a href = "javascript:viewThnic('-1');">全部</a></li>
+								<li><a href = "javascript:viewThnic('汉族');">汉族</a></li>
+								<li><a href = "javascript:viewThnic('少数民族');">少数民族</a></li>
+							</ul>
+					</div><!-- /btn-group -->
+				</th>
+				<th class = "input-mini"><button class = "btn">生日</button></th>
+				<th class = "input-mini"><button class = "btn">宿舍</button></th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+</div>
+
+<div class="modal hide fade" id = "stuDataEditModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>更新学生数据</h3>
+	</div>
+	<div class="modal-body">
+	<form class = "form-horizontal">
+	<!-- 更新的数据的主键 -->
+	<input type = "hidden" id = "editId" value = "1"/>
+	<!--  -->
+	<div class = "control-group">
+				<label class = "control-label" for = "stuCodeEdit">学号</label>
+				<div class = "controls">
+					<input type = "text" name = "stuCodeEdit" id = "stuCodeEdit">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "stuNameEdit">姓名</label>
+				<div class = "controls">
+					<input type = "text" name = "stuNameEdit" id = "stuNameEdit">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "genderEdit">性别</label>
+				<div class = "controls">
+					<select name = "genderEdit" id = "genderEdit">
+						<option value = "男">男</option>
+						<option value = "女">女</option>
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "thinicEdit">民族</label>
+				<div class = "controls">
+					<input type = "text" name = "thnicEdit" id = "thnicEdit" data-provide="typeahead" data-source='["汉族","蒙古族","满族","朝鲜族","赫哲族","达斡尔族","鄂温克族","鄂伦春族","回族","东乡族","土族","撒拉族","保安族","裕固族","维吾尔族","哈萨克族","柯尔克孜族","锡伯族","塔吉克族","乌孜别克族","俄罗斯族","塔塔尔族","藏族","门巴族","珞巴族","羌族","彝族","白族","哈尼族","傣族","僳僳族","佤族","拉祜族","纳西族","景颇族","布朗族","阿昌族","普米族","怒族","德昂族","独龙族","基诺族","苗族","布依族","侗族","水族","仡佬族","壮族","瑶族","仫佬族","毛南族","京族","土家族","黎族","畲族","高山族"]' >
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "facultyEdit">系别</label>
+				<div class = "controls">
+					<select name = "facultyEdit" id = "facultyEdit">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "majorEdit">专业</label>
+				<div class = "controls">
+					<select name = "majorEdit" id = "majorEdit">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "gradeEdit">年级</label>
+				<div class = "controls">
+					<input type = "text" name = "gradeEdit" id = "gradeEdit">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classCodeEdit">班级</label>
+				<div class = "controls">
+					<select name = "classCodeEdit" id = "classCodeEdit">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classAdmin2Edit">班主任</label>
+				<div class = "controls">
+					<input type = "text" name = "classAdmin2Edit" id = "classAdmin2Edit" class = "uneditable-input" disabled = "disabled">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classAdmin3Edit">辅导员</label>
+				<div class = "controls">
+					<input type = "text" name = "classAdmin3Edit" id = "classAdmin3Edit">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "phoneEdit">手机号</label>
+				<div class = "controls">
+					<input type = "text" name = "phoneEdit" id = "phoneEdit">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "schoolingYearEdit">学制</label>
+				<div class = "controls">
+					<select name = "schoolingYearEdit" id = "schoolingYearEdit">
+						<option value = "四年">四年</option>
+						<option value = "三年">三年</option>
+						<option value = "二年">二年</option>
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "schoolRollEdit">学籍状态</label>
+				<div class = "controls">
+					<select name = "schoolRollEdit" id = "schoolRollEdit">
+						<option value = "正常">正常</option>
+						<option value = "离校">离校</option>
+						<option value = "休学">休学</option>
+						<option value = "入伍">入伍</option>
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "IDNumEdit">身份证号</label>
+				<div class = "controls">
+					<input type = "text" name = "IDNumEdit" id = "IDNumEdit">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "birthdayEdit">生日</label>
+				<div class = "controls">
+					<input type = "text" name = "birthdayEdit" id = "birthdayEdit">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "dormitoryCodeEdit">宿舍</label>
+				<div class = "controls">
+					<input type = "text" name = "dormitoryCodeEdit" id = "dormitoryCodeEdit">
+				</div>
+	</div>
+	</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">取消</a>
+		<a href="#" class="btn btn-primary" id = "stuDataEditSubmit">保存更新</a>
+	</div>
+</div>
+
+<div class="modal hide fade" id = "stuDataAddModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>添加学生数据</h3>
+	</div>
+	<div class="modal-body">
+	<form class = "form-horizontal">
+	<div class = "control-group">
+				<label class = "control-label" for = "stuCodeAdd">学号</label>
+				<div class = "controls">
+					<input type = "text" name = "stuCodeAdd" id = "stuCodeAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "stuNameAdd">姓名</label>
+				<div class = "controls">
+					<input type = "text" name = "stuNameAdd" id = "stuNameAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "genderAdd">性别</label>
+				<div class = "controls">
+					<select name = "genderAdd" id = "genderAdd">
+						<option value = "男">男</option>
+						<option value = "女">女</option>
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "thinicAdd">民族</label>
+				<div class = "controls">
+					<input type = "text" name = "thnicAdd" id = "thnicAdd" data-provide="typeahead" data-source='["汉族","蒙古族","满族","朝鲜族","赫哲族","达斡尔族","鄂温克族","鄂伦春族","回族","东乡族","土族","撒拉族","保安族","裕固族","维吾尔族","哈萨克族","柯尔克孜族","锡伯族","塔吉克族","乌孜别克族","俄罗斯族","塔塔尔族","藏族","门巴族","珞巴族","羌族","彝族","白族","哈尼族","傣族","僳僳族","佤族","拉祜族","纳西族","景颇族","布朗族","阿昌族","普米族","怒族","德昂族","独龙族","基诺族","苗族","布依族","侗族","水族","仡佬族","壮族","瑶族","仫佬族","毛南族","京族","土家族","黎族","畲族","高山族"]' >
+				</div>
+				<div class = "typeahead_wrapper"></div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "facultyAdd">系别</label>
+				<div class = "controls">
+					<select name = "facultyAdd" id = "facultyAdd">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "majorAdd">专业</label>
+				<div class = "controls">
+					<select name = "majorAdd" id = "majorAdd">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "gradeAdd">年级</label>
+				<div class = "controls">
+					<input type = "text" name = "gradeAdd" id = "gradeAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classCodeAdd">班级</label>
+				<div class = "controls">
+					<select name = "classCodeAdd" id = "classCodeAdd">
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classAdmin2Add">班主任</label>
+				<div class = "controls">
+					<input type = "text" name = "classAdmin2Add" id = "classAdmin2Add" disabled = "disabled">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "classAdmin3Add">辅导员</label>
+				<div class = "controls">
+					<input type = "text" name = "classAdmin3Add" id = "classAdmin3Add">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "phoneAdd">手机号</label>
+				<div class = "controls">
+					<input type = "text" name = "phoneAdd" id = "phoneAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "schoolingYearAdd">学制</label>
+				<div class = "controls">
+					<select name = "schoolingYearAdd" id = "schoolingYearAdd">
+						<option value = "四年">四年</option>
+						<option value = "三年">三年</option>
+						<option value = "二年">二年</option>
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "schoolRollAdd">学籍状态</label>
+				<div class = "controls">
+					<select name = "schoolRollAdd" id = "schoolRollAdd">
+						<option value = "正常">正常</option>
+						<option value = "离校">离校</option>
+						<option value = "休学">休学</option>
+						<option value = "入伍">入伍</option>
+					</select>
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "IDNumAdd">身份证号</label>
+				<div class = "controls">
+					<input type = "text" name = "IDNumAdd" id = "IDNumAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "birthdayAdd">生日</label>
+				<div class = "controls">
+					<input type = "date" name = "birthdayAdd" id = "birthdayAdd">
+				</div>
+	</div>
+	<div class = "control-group">
+				<label class = "control-label" for = "dormitoryCodeAdd">宿舍</label>
+				<div class = "controls">
+					<input type = "text" name = "dormitoryCodeAdd" id = "dormitoryCodeAdd">
+				</div>
+	</div>
+	</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">取消</a>
+		<a href="#" class="btn btn-primary" id = "stuDataAddSubmit">确认添加</a>
+	</div>
+</div>
+
+<div class="modal hide fade" id = "bulkAddModal">
+	<div class="modal-header">
+		<a class="close" data-dismiss="modal">×</a>
+		<h3>导入学生数据</h3>
+	</div>
+	<div class="modal-body">
+	<iframe src = "bulkAddFileUpload.html" width = "100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+</div>	
+
+<div id = "footer" class = "navbar-static-bottom">
+<hr />
+<span style="font-family:arial;">Copyright &copy; 2013</span>
+<br>Powered by <a href = "http://www.gstill.com/">Still</a> & <a href = "/SDMS/conf/蔡寰宇-简历.doc">Darmody</a>
+<br><a href = "about.html">About us</a>
+</div>
+
+</body>
+</html>

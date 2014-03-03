@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<meta charset = "utf-8" http-equiv = "Content-Language" content = "zh-CN">
+<html>
+<head>
+<title>
+个人设置
+</title>
+</head>
+<body>
+<div id = "header"></div>
+<script type = "text/javascript" src = "resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "resources/js/jquery-cookie.js"></script>
+<script type = "text/javascript" src = "resources/js/header.js"></script>
+<script type = "text/javascript" src = "resources/js/profile_student.js"></script>
+<link rel = "stylesheet" media = "screen" href = "resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "resources/css/style.css"/>
+<div class = "container row">
+	<div class = "span3 offset1">
+		姓名：<span id = "stuName"></span>
+		<br/>
+		学号：<span id = "stuCode"></span>
+		<br/>
+		性别：<span id = "gender"></span>
+	</div>
+</div>
+<hr class = "container"/>
+	<div class="tabbable tabs-left container"> <!-- Only required for left/right tabs -->
+	<ul class="nav nav-tabs" id = "myTab">
+		<li class="active"><a href="#viewProfile" data-toggle="tab">个人数据</a></li>
+		<li><a href="#viewOfferData" click = "viewOfferData();" data-toggle="tab"> 查看报盘</a></li>
+		<li><a href="#updatePassword" data-toggle="tab"> 修改密码</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="viewProfile">
+			<div class = "span3 offset1">
+				学院：应用科技学院
+				<br/>
+				系别：<span id = "faculty"></span>
+				<br/>
+				专业：<span id = "major"></span>
+				<br/>
+				年级：<span id = "grade"></span>
+				<br/>
+				班级：<span id = "classCode"></span>
+			</div>
+			<div class = "span3">
+				班主任：<span id = "classAdmin2"></span>
+				<br/>
+				辅导员：<span id = "classAdmin3"></span>
+				<br/>
+				学制：<span id = "schoolingYear"></span>
+				<br/>
+				学籍状态：<span id = "schoolRoll"></span>
+			</div>
+			<div class = "span3">
+				民族：<span id = "thnic"></span>
+				<br/>
+				宿舍号：<span id = "dormitoryCode"></span>
+				<br/>
+				身份证号：<span id = "IDNum"></span>
+				<br/>
+				生日：<span id = "birthday"></span>
+				<br/>
+				手机号：<span id = "phoneNum"></span>
+			</div>
+		</div>
+
+		<div class = "tab-pane" id = "updatePassword">
+			<form class = "form-horizontal">
+				<div class = "control-group">
+					<label class = "control-label" for = "lastPassword">当前密码</label>
+					<div class = "controls">
+						<input type = "password" name = "lastPassword" id = "lastPassword">
+					</div>
+				</div>
+				<div class = "control-group">
+					<label class = "control-label" for = "newPassword1">新密码</label>
+					<div class = "controls">
+						<input type = "password" name = "newPassword1" id = "newPassword1" placeholder = "请输入不少于6个字符">
+						<span class="help-inline" id = "passwordCheck1"></span>
+					</div>
+				</div>
+				<div class = "control-group">
+					<label class = "control-label" for = "newPassword2">再输入一遍</label>
+					<div class = "controls">
+						<input type = "password" name = "newPassword2" id = "newPassword2" placeholder = "请输入不少于6个字符">
+						<span class="help-inline" id = "passwordCheck2"></span>
+					</div>
+				</div>
+				<div class = "form-actions">
+					<input type = "button" value = "确认修改" class = "btn btn-primary" id = "updatePasswordSubmit">
+				</div>
+			</form>
+		</div>
+
+		<div id = "viewOfferData" class = "tab-pane">
+			<div class = "row">
+			<div class = "span6">
+			<table id = "offerDataTable" class = "table table-striped table-hover table-condensed"></table>
+			</div>
+			</div>
+			<div class='btn-group' data-toggle='buttons-radio'>
+				<button class = 'btn' onclick = 'javascript:pageChange(-1);'>上一页</button>
+				<button class = 'btn' onclick = 'javascript:pageChange(+1);'>下一页</button>
+			</div>
+		</div>
+
+	</div>
+	</div>
+
+<div id = "footer" class = "navbar-static-bottom">
+<hr />
+<span style="font-family:arial;">Copyright &copy; 2013</span>
+<br>Powered by <a href = "http://www.gstill.com/">Still</a> & <a href = "/SDMS/conf/蔡寰宇-简历.doc">Darmody</a>
+<br><a href = "about.html">About us</a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<meta charset = "utf-8">
+<html>
+<head>
+<script type = "text/javascript" src = "../resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript">
+$(function(){
+	$("#bulkAddSubmit").click(function(){
+	$("#bulkAddForm").submit();
+	})
+})
+</script>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/style.css"/>
+</head>
+<body>
+
+
+<form class = "form-horizontal" enctype = "multipart/form-data" action = "studentsDataFileUpload.action" method = "post" id = "bulkAddForm">
+
+	<div class = "control-group">
+				<label class = "control-label" for = "excelAdd">excel文件</label>
+				<div class = "controls">
+					<input type = "file" name = "file" id = "excelAdd"><span class="help-inline"><a target = "_blank" href = "studentExcelTemplateDownload.action">下载模版</a></span>
+				</div>
+	</div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn btn-primary" id = "bulkAddSubmit" >确认提交</a>
+	</div>
+</form>
+
+</body>
+</html>

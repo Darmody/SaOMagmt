@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<meta charset = "utf-8">
+<html>
+<head>
+<script type = "text/javascript" src = "resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript" src = "resources/js/jquery-cookie.js"></script>
+<script type = "text/javascript" src = "resources/js/header.js"></script>
+<script type = "text/javascript">
+
+	function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) return unescape(r[2]); return null;
+	}
+
+	var loginStstus = getQueryString("logout");
+	if(loginStstus == "true"){
+
+		$.cookie("userName",null);
+		$.cookie("userType",null);
+		$.cookie("adminType",null);
+
+		alert("您未登录或因长时间未操作而自动退出，请重新登录。");
+
+	}
+
+$(function(){
+
+
+$("body").keydown(function(){
+	if(event.keyCode == 13){
+		$("#loginSubmit").click();
+	}
+});
+
+
+$("#loginSubmit").click(function(){
+var loginAccount = $("#userName").val();
+var password = $("#password").val();
+var userType = $('input:radio:checked').val();
+	var expiresDate= new Date();
+	expiresDate.setTime(expiresDate.getTime() + (30 * 60 * 1000)); //?替换成分钟数如果为60分钟则为 60 * 60 *1000
+if(userType == "teacher"){
+	$.get("adminLogin.action?loginAccount="+loginAccount+"&password="+password,null,function(data){
+		var jsonObj = eval('('+data+')');
+		var adminType = jsonObj.adminType;
+		var loginStatus = jsonObj.returnMessage;
+		if(loginStatus == "登录成功"){
+			$.cookie("userName",loginAccount);
+			$.cookie("userType","admin");
+			$.cookie("adminType",adminType);
+			window.location.href = "index.html";
+			alert(loginStatus);
+		}
+		else{
+			alert(loginStatus);
+		}
+	});
+}
+else if(userType == "student"){
+	$.get("studentLogin.action?stuCode="+loginAccount+"&password="+password,null,function(data){
+		var jsonObj = eval('('+data+')');
+		var loginStatus = jsonObj.returnMessage;
+		if(loginStatus == "登录成功"){
+			$.cookie("userName",loginAccount);
+			$.cookie("userType","student");
+			$.cookie("adminType","0");
+			window.location.href = "profile.html";
+			alert(loginStatus);
+		}
+		else{
+			alert(loginStatus);
+		}
+	});
+}
+});
+
+
+
+});
+
+</script>
+<link rel = "stylesheet" media = "screen" href = "resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "resources/css/style.css"/>
+<title>
+用户登录
+</title>
+</head>
+<body>
+<div id = "header"></div>
+<div id = "adminLoginDiv" class = "container">
+	<form class = "form-horizontal">
+		<fieldset>
+			<legend>用户登录</legend>
+			<div class = "control-group">
+				<label class = "control-label" for = "userName">用户名</label>
+				<div class = "controls">
+					<input type = "text" name = "userName" id = "userName"/>
+				</div>
+			</div>
+			<div class = "control-group">
+				<label class = "control-label" for = "password">密码</label>
+				<div class = "controls">
+					<input type = "password" name = "password" id = "password"/>
+				</div>
+			</div>
+
+			<div class = "control-group">
+				<label class = "control-label" for = "userType">用户类型</label>
+				<div class = "controls">
+					<input type = "radio" name = "userType" value = "student" id = "studentType"/>学生&nbsp;&nbsp;
+					<input type = "radio" name = "userType" value = "teacher" id = "teacherType" checked = "checked"/>管理员
+				</div>
+			</div>
+
+		<div class = "form-actions">
+			<input type = "reset" value = "重填" class = "btn">
+			<input type = "button" value = "登录" class = "btn btn-primary" id = "loginSubmit">
+		</div>
+		</fieldset>
+	</form>
+</div>
+
+<div id = "footer" class = "navbar-static-bottom">
+<hr />
+<span style="font-family:arial;">Copyright &copy; 2013</span>
+<br>Powered by <a href = "http://www.gstill.com/">Still</a> & <a href = "/SDMS/conf/蔡寰宇-简历.doc">Darmody</a>
+<br><a href = "about.html">About us</a>
+</div>
+
+</body>
+</html>

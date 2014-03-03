@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<meta charset = "utf-8">
+<html>
+<head>
+<script type = "text/javascript" src = "../resources/js/jquery-1.9.1.min.js"></script>
+<script type = "text/javascript" src = "../resources/js/bootstrap.min.js"></script>
+<script type = "text/javascript">
+$(function(){
+function getQueryString(name) {
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	var r = window.location.search.substr(1).match(reg);
+	if (r != null) return unescape(r[2]); return null;
+}
+	var PK_offerKey = getQueryString("PK_offerKey");
+	var flowNum = getQueryString("flowNum");
+
+	$("#fileUploadSubmit").click(function(){
+		$("#PK_offerKey").val(PK_offerKey);
+		$("#flowNum").val(flowNum);
+		$("#fileUploadForm").submit();
+	})
+})
+</script>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/bootstrap.min.css"/>
+<link rel = "stylesheet" media = "screen" href = "../resources/css/style.css"/>
+</head>
+<body>
+
+
+<form class = "form-horizontal" enctype = "multipart/form-data" action = "attachmentFileUpload.action" method = "post" id = "fileUploadForm">
+
+	<div class = "control-group">
+				<label class = "control-label" for = "fileUpload">请选择文件</label>
+				<div class = "controls">
+					<input type = "file" name = "file" id = "fileUpload">
+				</div>
+	</div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn btn-primary" id = "fileUploadSubmit" >确认提交</a>
+	</div>
+	<input type = "hidden" id = "PK_offerKey" name = "PK_offerKey">
+	<input type = "hidden" id = "flowNum" name = "flowNum">
+</form>
+
+</body>
+</html>
